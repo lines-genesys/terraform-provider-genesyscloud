@@ -115,7 +115,14 @@ func TestAccResourceOutboundCampaign(t *testing.T) {
 					verifyAttributeInArrayOfPotentialValues("genesyscloud_outbound_campaign."+resourceId, "campaign_status", []string{"on", "complete"}),
 				),
 			},
+			{
+				// Import/Read
+				ResourceName:      "genesyscloud_outbound_campaign." + resourceId,
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
 		},
+		CheckDestroy: testVerifyOutboundCampaignDestroyed,
 	})
 
 	resource.Test(t, resource.TestCase{
@@ -260,7 +267,15 @@ func TestAccResourceOutboundCampaign(t *testing.T) {
 					testDefaultHomeDivision("genesyscloud_outbound_campaign."+resourceId),
 				),
 			},
+			{
+				// Import/Read
+				ResourceName:            "genesyscloud_outbound_campaign." + resourceId,
+				ImportState:             true,
+				ImportStateVerify:       true,
+				ImportStateVerifyIgnore: []string{"queue_id"},
+			},
 		},
+		CheckDestroy: testVerifyOutboundCampaignDestroyed,
 	})
 }
 
@@ -442,6 +457,12 @@ func TestAccResourceOutboundCampaignWithScriptId(t *testing.T) {
 						"genesyscloud_outbound_callabletimeset."+callableTimeSetResourceId, "id"),
 					testDefaultHomeDivision("genesyscloud_outbound_campaign."+resourceId),
 				),
+			},
+			{
+				// Import/Read
+				ResourceName:      "genesyscloud_outbound_campaign." + resourceId,
+				ImportState:       true,
+				ImportStateVerify: true,
 			},
 		},
 		CheckDestroy: testVerifyOutboundCampaignDestroyed,
